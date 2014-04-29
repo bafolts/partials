@@ -2,9 +2,9 @@
 <html>
   <head>
     <title>Partials Example Page</title>
-    <script src="http://requirejs.org/docs/release/2.1.11/minified/require.js"></script>
+    <script src="shards/shards.js"></script>
     <script>
-      require(["partials/page"], function (page) {
+      shards.require(["examplePage"], function (page) {
         var myPage = new page();
         myPage.init()
       })
