@@ -7,7 +7,7 @@ shards.define(["shards/page", "shards/util"], function (page, util) {
   examplePage.prototype.init = function () {
     examplePage.superclass.init.call(this);
     
-    console.log("[example page module init]");
+
   }
 
   return examplePage

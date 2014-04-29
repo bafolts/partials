@@ -47,3 +47,43 @@ if (typeof(require) === "undefined") {
   shards.define = define;
 
 }
+
+shards._placeholderCount = 0;
+
+shards.render = function (type, config) {
+  
+  var placeholderId = null;
+  
+  if (typeof (config) === "undefined" || typeof (config.guid) === "undefined") {
+    while (document.getElementById("ph"+shards._placeholderCount)!==null) {
+      shards._placeholderCount++;
+    }
+    config = config || {};
+    config.guid = "ph" + shards._placeholderCount;
+  }
+
+  document.write("<span id=\""+config.guid+"\"></span>");
+
+  shards.require([type], function (shard) {
+    new shard(config).render();
+  })
+}
+
+shards.merge = function(mBase, mNew) {
+
+  var result = {};
+  
+  for (var key in mBase) {
+    result[key] = mBase[key];
+  }
+  
+  for (var key in mNew) {
+    if (!(key in result)) {
+      result[key] = mNew[key];
+    }
+  }
+  
+  return result;
+
+}
+
