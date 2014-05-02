@@ -2,20 +2,29 @@
 <html>
   <head>
     <title>Partials Example Page</title>
+    <script src="shards/lib/requirejs/require.js"></script>
     <script src="shards/shards.js"></script>
     <script>
-      shards.require(["examplePage"], function (page) {
+      require(["examplePage"], function (page) {
         var myPage = new page();
-        myPage.init()
       })
+      
+      window.onload = function () {
+        require(["shards"], function (shards) {
+          shards.create("shards/ui/textbox", { sValue: "Dynamic!" }, function (elContainer) {
+            document.body.appendChild(elContainer)
+          })
+        })
+      }
+      
     </script>
   </head>
   <body>
     <h1>Example Page</h1>
-    <script>
-    shards.render("shards/ui/textbox", {
-      guid: "MyTextBox",
-      className: "shard-textbox"
+    <input id="SomePartial" />
+    <script type="text/javascript">
+    require(["shards"], function (shards) {
+      shards.load("shards/ui/textbox", { sValue: "Hello World" }, document.getElementById("SomePartial"))
     })
     </script>
   </body>

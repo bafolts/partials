@@ -1,25 +1,50 @@
-shards.define(function() {
+/**
+ * A module which represents a shard. A shard is a module which gives meaning
+ * a context to an HTML Element.
+ * @module shard
+ * @version 0.1
+ */
+define(["shards", "./util"], function(shards, util) {
 
+  /**
+   * Creates a new shard
+   * @constructor
+   * @alias module:shard
+   * @param config {Object} The configuration used to create this shard
+   */
   var shard = function (config) {
-    this.config = shards.merge(config, {
-      guid: null,
-      className: null
+
+    this.config = util.merge(config, {
+      sGuid: null,
+      sClassName: null
     });
-  }
-
-  shard.prototype.init = function () {
-
+    
+    this.elContainer = null;
+    
   }
   
-  shard.prototype.render = function (container) {
-    document.getElementById(this.config.guid).parentNode.removeChild(document.getElementById(this.config.guid).previousSibling)
-    document.getElementById(this.config.guid).parentNode.replaceChild(container, document.getElementById(this.config.guid));
-    if (this.config.guid.substring(0, 2)!=="ph") {
-      container.setAttribute("id", this.config.guid);
-    }
-    if (this.config.className !== null) {
-      container.className = this.config.className;
-    }
+  /**
+   * Loads a chard to the a container
+   * @param container {Element} The element of the shard to load
+   */
+  shard.prototype.load = function (container) {
+    this.elContainer = container;
+  }
+
+  /**
+   * Returns the current container that this shard represents
+   * @returns {Object} The container for the shard
+   */
+  shard.prototype.getContainer = function () {
+    return this.elContainer;
+  }
+  
+  /**
+   * Sets the current container that this shard represents
+   * @param container {Object} The new container that this shard will represent
+   */
+  shard.prototype.setContainer = function (container) {
+    this.elContainer = container;
   }
 
   return shard;

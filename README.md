@@ -1,4 +1,8 @@
-partials
+shards
 ========
 
-Partials is an approach to writing web applications through the use of common software development practices which keeps development more organized leading to less side effects and higher productivity.
+Shards is a simple approach to giving context and meaning to elements contained within the DOM. Removes the need to utilize data attributes on elements to provide context.
+
+[Visit Shards on github](https://github.com/bafolts/shards/)
+
+[Visit our documentation site](http://www.shardjs.com)

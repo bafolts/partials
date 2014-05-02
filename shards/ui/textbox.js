@@ -1,24 +1,38 @@
-shards.define(["shards/shard", "shards/util"], function (shard, util) {
+define(["shards", "hb!./textbox.handlebars", "../shard", "../util"], function (shards, handlebarsTemplate, shard, util) {
 
   var textbox = util.extend(shard, function (config) {
 
-    this.config = shards.merge(config, {
-      value: null
+    this.config = util.merge(config, {
+      sValue: null
     })
     
     textbox.superclass.constructor.call(this, this.config);
   });
 
-  textbox.prototype.render = function () {
+  textbox.prototype.create = function (callback) {
+    var elDiv = document.createElement("div");
+    elDiv.innerHTML = handlebarsTemplate(this.config);
+    this.setContainer(elDiv.firstChild);
+    callback.call(this, this.getContainer());
+  }
   
-    var elInput = document.createElement("INPUT");
+  textbox.prototype.load = function (container) {
+    textbox.superclass.load.call(this, container);
+
+    this.getContainer().setAttribute("type", "text");
+
+    if (this.config.sValue !== null) {
+      this.getContainer().setAttribute("value", this.config.sValue);
+    } else {
+      this.getContainer().removeAttribute("value")
+    }
     
-    if (this.config.value !== null) {
-      elInput.value = this.config.value;
+    if (this.config.sClassName !== null) {
+      this.getContainer().setAttribute("class", this.config.sClassName);
+    } else {
+      this.getContainer().removeAttribute("class");
     }
   
-    textbox.superclass.render.call(this, elInput);
- 
   }
 
   return textbox;

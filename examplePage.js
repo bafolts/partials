@@ -1,4 +1,4 @@
-shards.define(["shards/page", "shards/util"], function (page, util) {
+define("examplePage", ["shards/page", "shards/util"], function (page, util) {
 
   var examplePage = util.extend(page, function (config) {
   
