@@ -16,6 +16,26 @@ define("shards", function () {
   })
 
   return {
+  
+    instances: [],
+
+    getByContainer: function (container) {
+      for (var i = 0, length = this.instances.length; i < length; i++) {
+        if (this.instances[i].getContainer() === container) {
+          return this.instances[i];
+        }
+      }
+      return null;
+    },
+
+    getById: function (id) {
+      for (var i = 0, length = this.instances.length; i < length; i++) {
+        if (this.instances[i].getId() === id) {
+          return this.instances[i];
+        }
+      }
+      return null;
+    },
 
     /**
      * Loads a pre-rendered shard. This is a shard that already has the

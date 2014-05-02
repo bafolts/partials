@@ -17,8 +17,12 @@ define(["./shard", "./util"], function(shard, util) {
   var page = function (oConfig) {
     page.superclass.constructor.call(this)
     
+    // This needs to be done onDomReady
+    this.setContainer(document.body)
   };
   util.extend(shard, page);
+  
+  
   
   return page;
 

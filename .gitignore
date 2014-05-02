@@ -3,3 +3,6 @@ node_modules
 
 #ignore jsdoc output folder
 out
+
+#ignore the jsdoc configuration file
+conf.json

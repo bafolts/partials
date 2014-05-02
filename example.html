@@ -8,15 +8,14 @@
       require(["examplePage"], function (page) {
         var myPage = new page();
       })
-      
       window.onload = function () {
         require(["shards"], function (shards) {
           shards.create("shards/ui/textbox", { sValue: "Dynamic!" }, function (elContainer) {
             document.body.appendChild(elContainer)
+            console.log(shards.getByContainer(document.body).getDescendants())
           })
         })
       }
-      
     </script>
   </head>
   <body>
@@ -24,7 +23,7 @@
     <input id="SomePartial" />
     <script type="text/javascript">
     require(["shards"], function (shards) {
-      shards.load("shards/ui/textbox", { sValue: "Hello World" }, document.getElementById("SomePartial"))
+      shards.load("shards/ui/textbox", { sId: "SomePartial", sValue: "Hello World" }, document.getElementById("SomePartial"))
     })
     </script>
   </body>

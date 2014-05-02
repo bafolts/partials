@@ -15,12 +15,75 @@ define(["shards", "./util"], function(shards, util) {
   var shard = function (config) {
 
     this.config = util.merge(config, {
-      sGuid: null,
+      sId: null,
       sClassName: null
     });
     
     this.elContainer = null;
-    
+
+    shards.instances.push(this);
+  }
+
+  /**
+   * Returns the current id of the shard
+   * @returns {string} The current id of the shard, null if none is set.
+   */
+  shard.prototype.getId = function () {
+    return this.config.sId;
+  }
+  
+
+  /**
+   * Returns the parent shard for this shard
+   * @returns {shard} The parent shard for this shard, null if there is no parent.
+   */
+  shard.prototype.getParent = function () {
+    var elStart = this.getContainer();
+    while ((elStart = elStart.parentElement) !== null) {
+      // If it is an element node
+      if (elStart.nodeType === 1) {
+        for (var i = 0, length = shards.instances.length; i < length; i++) {
+          if (shards.instances[i].getContainer() === elStart) {
+            return shards.instances[i];
+          }
+        }
+      }
+    }
+    return null;
+  }
+  
+  shard.prototype.getElementById = function () {
+    // TODO
+  }
+  
+  shard.prototype.getChildren = function () {
+    var aChildren = this.getContainer().childNodes;
+    var aResult = [];
+    for (var i = 0, length = aChildren.length; i < length; i++) {
+      if (aChildren[i].nodeType === 1) {
+        for (var j = 0, lengthJ = shards.instances.length; j < lengthJ; j++) {
+          if (aChildren[i] === shards.instances[j].getContainer()) {
+            aResult.push(shards.instances[j])
+          }
+        }
+      }
+    }
+    return aResult;
+  }
+  
+  shard.prototype.getDescendants = function () {
+    var aDescendants = this.getContainer().getElementsByTagName("*");
+    var aResult = [];
+    for (var i = 0, length = aDescendants.length; i < length; i++) {
+      if (aDescendants[i].nodeType === 1) {
+        for (var j = 0, lengthJ = shards.instances.length; j < lengthJ; j++) {
+          if (aDescendants[i] === shards.instances[j].getContainer()) {
+            aResult.push(shards.instances[j])
+          }
+        }
+      }
+    }
+    return aResult
   }
   
   /**
