@@ -20,7 +20,7 @@ house the code required for the general idea of a shard, which is giving context
 ```html
 <input type="text" value="45" id="Age" />
 <!-- Sample Usage -->
-<script type="text/javascript>
+<script type="text/javascript">
 require(["shards/ui/textbox"], function (textbox) {
   shards.load({
     sClassName: "configure-look-specifically"
