@@ -14,16 +14,13 @@ define(["./shard", "./util"], function(shard, util) {
    * @alias module:page
    * @param config {Object} The configuration used to create this page
    */
-  var page = function (oConfig) {
+  var page = util.extend(shard, function (oConfig) {
     page.superclass.constructor.call(this)
     
     // This needs to be done onDomReady
     this.setContainer(document.body)
-  };
-  util.extend(shard, page);
-  
-  
-  
+  });
+
   return page;
 
 })

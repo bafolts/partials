@@ -6,3 +6,4 @@ out
 
 #ignore the jsdoc configuration file
 conf.json
+require.js

@@ -9,37 +9,37 @@ define(function() {
   return {
 
     /**
-     * Extends a class utilizing the prototype inheritance model commonly
-     * used to mimic object oriented extension.
-     * @param baseObject {Class} The base class which will be extended.
-     * @param inheritingObject {Class} The inheriting class which will inherit base prototype members
-     * @return {Class} The resulting class
+     * Extends a shard utilizing the prototype inheritance model commonly
+     * used to mimic object oriented extension in javascript.
+     * @param shBase {Object.<module:shard>} The base shard which will be extended.
+     * @param shNew {Object.<module:shard>} The inheriting shard which will inherit base prototype members.
+     * @return {Object.<module:shard>} The resulting shard
      * @static
      */
-    extend: function (baseObject, inheritingObject) {
+    extend: function (shBase, shNew) {
       var c = function(){};
-      c.prototype = baseObject.prototype;
-      inheritingObject.prototype = new c();
-      inheritingObject.prototype.constructor = inheritingObject;
-      inheritingObject.superclass = baseObject.prototype;
-      return inheritingObject;
+      c.prototype = shBase.prototype;
+      shNew.prototype = new c();
+      shNew.prototype.constructor = shNew;
+      shNew.superclass = shBase.prototype;
+      return shNew;
     },
 
     /**
      * Merges two configuration objects to be used in shard constructors
-     * @param mBase {Object} The base configuration object
-     * @param mNew {Object} The new configuration object
+     * @param oBase {Object} The base configuration object
+     * @param oNew {Object} The new configuration object
      * @return {Object} The merged configuration object
      * @static
      */
-    merge: function(mBase, mNew) {
+    merge: function(oBase, oNew) {
       var result = {};
-      for (var key in mBase) {
-        result[key] = mBase[key];
+      for (var key in oBase) {
+        result[key] = oBase[key];
       }
-      for (var key in mNew) {
+      for (var key in oNew) {
         if (!(key in result)) {
-          result[key] = mNew[key];
+          result[key] = oNew[key];
         }
       }
       return result;

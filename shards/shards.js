@@ -7,30 +7,34 @@
  */
 define("shards", function () {
 
-  require.config({
-    paths: {
-      text: './shards/lib/requirejs/text',
-      hb: './shards/lib/requirejs-hb/hb',
-      handlebars: './shards/lib/handlebars/handlebars-v1.3.0'
-    }
-  })
-
   return {
   
     instances: [],
 
-    getByContainer: function (container) {
+    /**
+     * Returns the associated shard for the provided container, or null if not found.
+     * @param elContainer {Element} The element to search for.
+     * @return {module:shard} The associated shard for the provided container, or null if not found.
+     * @static
+     */
+    getByContainer: function (elContainer) {
       for (var i = 0, length = this.instances.length; i < length; i++) {
-        if (this.instances[i].getContainer() === container) {
+        if (this.instances[i].getContainer() === elContainer) {
           return this.instances[i];
         }
       }
       return null;
     },
 
-    getById: function (id) {
+    /**
+     * Returns the associated shard for the provided id, or null if not found.
+     * @param sId {string} The id to search for.
+     * @return {module:shard} The associated shard for the provided id, or null if not found.
+     * @static
+     */
+    getById: function (sId) {
       for (var i = 0, length = this.instances.length; i < length; i++) {
-        if (this.instances[i].getId() === id) {
+        if (this.instances[i].getId() === sId) {
           return this.instances[i];
         }
       }
@@ -43,15 +47,15 @@ define("shards", function () {
      * shard module with the provided container. It is a helper method
      * since a shard can always be created manually by calling load on the instance of a shard
      * module.
-     * @param type {String} The name of the shard module to load
-     * @param config {Object} The configuration object to use for the shard
-     * @param container {Element} The element which will be used for the container of the shard
+     * @param sType {String} The name of the shard module to load
+     * @param oConfig {Object} The configuration object to use for the shard
+     * @param elContainer {Element} The element which will be used for the container of the shard
      * @static
      */
-    load : function (type, config, container) {
+    load : function (sType, oConfig, elContainer) {
       
-      require([type], function (shard) {
-        new shard(config).load(container);
+      require([sType], function (shard) {
+        new shard(oConfig).load(elContainer);
       })
 
     },
@@ -59,16 +63,16 @@ define("shards", function () {
     /**
      * Creates a shard of a provided type. This method should be used for the dynamic creation of a shard. It is a helper method
      * since a shard can always be created manually by calling create on the instance of a shard module.
-     * @param type {String} the name of the shard module to load
-     * @param config {Object} The configuration object to use for the shard
-     * @param callback {Function} The function to call when the shard has been fully created.
+     * @param sType {String} the name of the shard module to load
+     * @param oConfig {Object} The configuration object to use for the shard
+     * @param fCallback {Function} The function to call when the shard has been fully created.
      * @static
      * This function will have a single parameter which is the new container for the shard, the scope of the function will be that of the shard module.
      */
-    create : function (type, config, callback) {
+    create : function (sType, oConfig, fCallback) {
       
-      require([type], function (shard) {
-        new shard(config).create(callback);
+      require([sType], function (shard) {
+        new shard(oConfig).create(fCallback);
       })
       
     }
